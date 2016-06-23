@@ -1,8 +1,3 @@
-find_package(Boost 1.60 REQUIRED COMPONENTS unit_test_framework)
-
-add_subdirectory(sort)
-add_subdirectory(graph)
-
 file(
     GLOB TESTFILES
     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
