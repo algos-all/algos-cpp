@@ -1,35 +1,34 @@
+#include <functional>
 #include <iostream>
 #include <vector>
 
-template<typename T>
+template<typename T, typename Key=std::less_equal<T>>
 class Heap {
     using vt = std::vector<T>;
-    using sz = typename vt::size_type;
-
-    using iter = typename vt::iterator;
-    using citer = const typename vt::iterator;
+    using iterator = typename vt::iterator;
 
     vt xs;
+    Key key;
 
-    void swim(citer xit, iter zit) {
+    void swim(const iterator xit, iterator zit) {
         for (auto it = xit; zit != xit; zit = it) {
             it += std::distance(xit, zit) / 2;
 
-            if (*it <= *zit) {break;}
+            if (key(*it, *zit)) {break;}
 
             std::swap(*it, *zit);
         }
     }
 
-    void sink(citer xit, citer yit, iter zit) {
+    void sink(const iterator xit, const iterator yit, iterator zit) {
         auto lit = zit + std::distance(xit, zit) + 1;
 
         while (lit < yit) {
             auto rit = lit + 1;
 
-            auto it = rit < yit && *rit < *lit ? rit : lit;
+            auto it = rit < yit && key(*rit, *lit) ? rit : lit;
 
-            if (*zit <= *it) {break;}
+            if (key(*zit, *it)) {break;}
 
             std::swap(*it, *zit);
             zit = it;
@@ -38,19 +37,23 @@ class Heap {
     }
 
 public:
-    Heap() : xs() {}
-    Heap(const vt &xs) : xs(xs) {
-        auto beg = this->xs.rbegin();
-        auto end = this->xs.rend();
+    Heap() : Heap(vt()) {}
+    Heap(const vt &xs) : Heap(xs, Key()) {}
 
-        auto it = beg + std::distance(beg, end) / 2;
+    Heap(const vt &xs, Key key) : xs(xs), key(key) {
+        auto xit = this->xs.rbegin();
+        auto yit = this->xs.rend();
 
-        for (; it != end; ++it) {
+        auto it = xit + std::distance(xit, yit) / 2;
+
+        for (; it != yit; ++it) {
             sink(this->xs.begin(), this->xs.end(), it.base() - 1);
         }
     }
 
-    sz size() {return this->xs.size();}
+    typename vt::size_type size() {
+        return this->xs.size();
+    }
 
     void push(const T &val) {
         xs.push_back(val);
@@ -83,7 +86,7 @@ public:
     }
 
     friend std::ostream &
-    operator<<(std::ostream &os, const Heap<T> &heap) {
+    operator<<(std::ostream &os, const Heap<T, Key> &heap) {
         for (const auto x : heap.xs) {
             os << x << " ";
         } os << std::endl;

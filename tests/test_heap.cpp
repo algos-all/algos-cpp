@@ -4,14 +4,26 @@
 #include "test.hpp"
 #include "heap.hpp"
 
-BOOST_AUTO_TEST_CASE(empty_size_0) {
+BOOST_AUTO_TEST_CASE(empty_0) {
     auto heap = Heap<int>();
 
     BOOST_TEST(heap.size() == 0);
 }
 
-BOOST_AUTO_TEST_CASE(top_1) {
+BOOST_AUTO_TEST_CASE(empty_1) {
+    auto heap = Heap<int, std::greater<int>>();
+
+    BOOST_TEST(heap.size() == 0);
+}
+
+BOOST_AUTO_TEST_CASE(top_0) {
     auto heap = Heap<int>({42});
+
+    BOOST_TEST(heap.top() == 42);
+}
+
+BOOST_AUTO_TEST_CASE(top_1) {
+    auto heap = Heap<int, std::greater<int>>({42});
 
     BOOST_TEST(heap.top() == 42);
 }
@@ -20,6 +32,12 @@ BOOST_AUTO_TEST_CASE(top_2) {
     auto heap = Heap<int>({43, 42});
 
     BOOST_TEST(heap.top() == 42);
+}
+
+BOOST_AUTO_TEST_CASE(top_3) {
+    auto heap = Heap<int, std::greater<int>>({43, 42});
+
+    BOOST_TEST(heap.top() == 43);
 }
 
 BOOST_AUTO_TEST_CASE(pop_0) {
@@ -32,10 +50,26 @@ BOOST_AUTO_TEST_CASE(pop_0) {
         BOOST_TEST(x == heap.top());
         heap.pop();
     }
+
+    BOOST_TEST(heap.size() == 0);
 }
 
+BOOST_AUTO_TEST_CASE(pop_1) {
+    vi xs = {44, 43, 42, 41, 40};
+    auto heap = Heap<int, std::greater_equal<int>>(xs);
+
+    for (auto x : xs) {
+        BOOST_TEST(x == heap.top());
+        heap.pop();
+    }
+
+    BOOST_TEST(heap.size() == 0);
+}
+
+vi lengths0 = {9, 10, 15, 18, 100, 1000};
+
 BOOST_DATA_TEST_CASE(
-    pop_1, bdata::make({9, 10, 15, 18, 100, 1000}) * bdata::xrange(10), n, s
+    pop_2, bdata::make(lengths0) * bdata::xrange(10), n, s
 ) {
     vi xs = create_vector(n, s);
 
@@ -46,9 +80,27 @@ BOOST_DATA_TEST_CASE(
         BOOST_TEST(x == heap.top());
         heap.pop();
     }
+
+    BOOST_TEST(heap.size() == 0);
 }
 
-vi lengths = {
+BOOST_DATA_TEST_CASE(
+    pop_3, bdata::make(lengths0) * bdata::xrange(10), n, s
+) {
+    vi xs = create_vector(n, s);
+
+    auto heap = Heap<int, std::greater<int>>(xs);
+
+    std::sort(xs.begin(), xs.end(), std::greater<int>());
+    for (auto x : xs) {
+        BOOST_TEST(x == heap.top());
+        heap.pop();
+    }
+
+    BOOST_TEST(heap.size() == 0);
+}
+
+vi lengths1 = {
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
     11, 12, 13, 15, 17, 18, 19, 20, 21, 22,
     25, 28, 29, 30, 32, 33, 50, 59, 60, 65,
@@ -56,7 +108,7 @@ vi lengths = {
 };
 
 BOOST_DATA_TEST_CASE(
-    random_sort, bdata::make(lengths) * bdata::xrange(10), n, s
+    random_sort_0, bdata::make(lengths1) * bdata::xrange(10), n, s
 ) {
     vi xs = create_vector(n, s);
 
@@ -67,6 +119,26 @@ BOOST_DATA_TEST_CASE(
     BOOST_TEST(xs.size() == ys.size());
 
     std::sort(xs.begin(), xs.end(), std::greater<int>());
+
+    for (typename vi::size_type i = 0; i < xs.size(); ++i) {
+        BOOST_TEST(xs[i] == ys[i]);
+    }
+
+    BOOST_TEST(std::equal(xs.begin(), xs.end(), ys.begin()) == true);
+}
+
+BOOST_DATA_TEST_CASE(
+    random_sort_1, bdata::make(lengths1) * bdata::xrange(10), n, s
+) {
+    vi xs = create_vector(n, s);
+
+    auto heap = Heap<int, std::greater<int>>(xs);
+
+    vi ys = heap.sort();
+
+    BOOST_TEST(xs.size() == ys.size());
+
+    std::sort(xs.begin(), xs.end());
 
     for (typename vi::size_type i = 0; i < xs.size(); ++i) {
         BOOST_TEST(xs[i] == ys[i]);
