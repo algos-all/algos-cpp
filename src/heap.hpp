@@ -10,13 +10,13 @@ class Heap {
     vt xs;
     Key key;
 
-    void swim(const iterator xit, iterator zit) {
-        for (auto it = xit; zit != xit; zit = it) {
-            it += std::distance(xit, zit) / 2;
+    void swim(const iterator xit, iterator yit) {
+        while (xit != yit) {
+            auto it = xit + std::distance(xit, yit) / 2;
 
-            if (key(*it, *zit)) {break;}
+            if (key(*it, *yit)) {break;}
 
-            std::swap(*it, *zit);
+            std::swap(*it, *yit);
         }
     }
 
