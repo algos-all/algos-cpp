@@ -6,27 +6,27 @@
 template<typename Node, typename Weight>
 class WeightedGraph : public AbstractWeightedGraph<Node, Weight> {
 public:
-    using Nodes = typename AbstractWeightedGraph<Node, Weight>::Nodes;
-    using Edges = typename AbstractWeightedGraph<Node, Weight>::Edges;
+    using graph = AbstractWeightedGraph<Node, Weight>;
 
-    WeightedGraph() : AbstractWeightedGraph<Node, Weight>() {}
-    WeightedGraph(Edges edges)
-        : AbstractWeightedGraph<Node, Weight>(edges)
-    {}
+    using nodes = typename graph::nodes;
+    using edges = typename graph::edges;
+
+    WeightedGraph() : graph() {}
+    WeightedGraph(edges es) : graph(es) {}
 
     virtual void add_edge(Node n1, Node n2, Weight w) override {
-        this->edges.insert({n1, Nodes()});
-        this->edges.insert({n2, Nodes()});
+        this->es.insert({n1, nodes()});
+        this->es.insert({n2, nodes()});
 
-        this->edges[n1].push_back({n2, w});
-        this->edges[n2].push_back({n1, w});
+        this->es[n1].push_back({n2, w});
+        this->es[n2].push_back({n1, w});
     }
 
     virtual void del_edge(Node n1, Node n2) override {
-        auto i1 = this->edges.find(n1);
-        auto i2 = this->edges.find(n2);
+        auto i1 = this->es.find(n1);
+        auto i2 = this->es.find(n2);
 
-        const auto end = this->edges.end();
+        const auto end = this->es.end();
         if (i1 == end && i2 == end) {return;}
 
         auto &v1 = i1->second;
@@ -52,26 +52,26 @@ public:
 template<typename Node, typename Weight>
 class WeightedDiGraph : public AbstractWeightedGraph<Node, Weight> {
 public:
-    using Nodes = typename AbstractWeightedGraph<Node, Weight>::Nodes;
-    using Edges = typename AbstractWeightedGraph<Node, Weight>::Edges;
+    using graph = AbstractWeightedGraph<Node, Weight>;
 
-    WeightedDiGraph() : AbstractWeightedGraph<Node, Weight>() {}
-    WeightedDiGraph(Edges edges)
-        : AbstractWeightedGraph<Node, Weight>(edges)
-    {}
+    using nodes = typename graph::nodes;
+    using edges = typename graph::edges;
+
+    WeightedDiGraph() : graph() {}
+    WeightedDiGraph(edges es) : graph(es) {}
 
     virtual void add_edge(Node n1, Node n2, Weight w) override {
-        this->edges.insert({n1, Nodes()});
-        this->edges.insert({n2, Nodes()});
+        this->es.insert({n1, nodes()});
+        this->es.insert({n2, nodes()});
 
-        this->edges[n1].push_back({n2, w});
+        this->es[n1].push_back({n2, w});
     }
 
     virtual void del_edge(Node n1, Node n2) override {
-        auto i1 = this->edges.find(n1);
-        auto i2 = this->edges.find(n2);
+        auto i1 = this->es.find(n1);
+        auto i2 = this->es.find(n2);
 
-        const auto end = this->edges.end();
+        const auto end = this->es.end();
         if (i1 == end && i2 == end) {return;}
 
         auto &v1 = i1->second;

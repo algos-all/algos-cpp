@@ -5,19 +5,27 @@
 template<typename Node>
 class AbstractGraph {
 public:
-    using Nodes = std::vector<Node>;
-    using Edges = std::unordered_map<Node, Nodes>;
+    using nodes = std::vector<Node>;
+    using edges = std::unordered_map<Node, nodes>;
 protected:
-    Edges edges;
+    edges es;
 public:
-    AbstractGraph () : edges(Edges()) {};
-    AbstractGraph (Edges edges) : edges(edges) {}
+    AbstractGraph () : es(edges()) {};
+    AbstractGraph (edges es) : es(es) {}
 
     virtual void add_edge(Node n1, Node n2) = 0;
     virtual void del_edge(Node n1, Node n2) = 0;
 
-    Nodes &at(const Node &node) {
-        return this->edges.at(node);
+    nodes &at(const Node &node) {
+        return this->es.at(node);
+    }
+
+    typename edges::iterator begin() {
+        return es.begin();
+    }
+
+    typename edges::iterator end() {
+        return es.end();
     }
 };
 
@@ -25,18 +33,28 @@ public:
 template<typename Node, typename Weight>
 class AbstractWeightedGraph {
 public:
-    using Nodes = std::vector<std::pair<Node, Weight>>;
-    using Edges = std::unordered_map<Node, Nodes>;
+    using wnode = std::pair<Node, Weight>;
+
+    using nodes = std::vector<wnode>;
+    using edges = std::unordered_map<Node, nodes>;
 protected:
-    Edges edges;
+    edges es;
 public:
-    AbstractWeightedGraph () : edges(Edges()) {};
-    AbstractWeightedGraph (Edges edges) : edges(edges) {};
+    AbstractWeightedGraph() : es() {};
+    AbstractWeightedGraph(edges es) : es(es) {};
 
     virtual void add_edge(Node n1, Node n2, Weight w) = 0;
     virtual void del_edge(Node n1, Node n2) = 0;
 
-    Nodes &at(const Node &node) {
-        return this->edges.at(node);
+    nodes &at(const Node &node) {
+        return this->es.at(node);
+    }
+
+    typename edges::iterator begin() {
+        return es.begin();
+    }
+
+    typename edges::iterator end() {
+        return es.end();
     }
 };
