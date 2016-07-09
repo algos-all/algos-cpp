@@ -12,7 +12,7 @@ BOOST_AUTO_TEST_CASE(empty_0) {
     BOOST_TEST((result == xs.end()));
 }
 
-BOOST_AUTO_TEST_CASE(single_hit) {
+BOOST_AUTO_TEST_CASE(single_hit_0) {
     const vi xs = {2};
 
     const auto result = binsearch(xs.begin(), xs.end(), 2);
@@ -21,7 +21,7 @@ BOOST_AUTO_TEST_CASE(single_hit) {
     BOOST_TEST(*result == 2);
 }
 
-BOOST_AUTO_TEST_CASE(single_lmiss) {
+BOOST_AUTO_TEST_CASE(single_lmiss_0) {
     const vi xs = {2};
 
     const auto result = binsearch(xs.begin(), xs.end(), 1);
@@ -29,7 +29,7 @@ BOOST_AUTO_TEST_CASE(single_lmiss) {
     BOOST_TEST((result == xs.end()));
 }
 
-BOOST_AUTO_TEST_CASE(single_rmiss) {
+BOOST_AUTO_TEST_CASE(single_rmiss_0) {
     const vi xs = {2};
 
     const auto result = binsearch(xs.begin(), xs.end(), 3);
@@ -76,4 +76,18 @@ BOOST_DATA_TEST_CASE(
         BOOST_TEST((result != zs.end()));
         BOOST_TEST(*result == y);
     }
+}
+
+BOOST_AUTO_TEST_CASE(swapped_iterators_0) {
+    vi xs = {1, 2, 3, 4, 5};
+
+    BOOST_TEST((binsearch(xs.end(), xs.begin(), 0) == xs.begin()));
+    BOOST_TEST((binsearch(xs.begin()+3, xs.end()-3, 0) == xs.end()-3));
+}
+
+BOOST_AUTO_TEST_CASE(swapped_iterators_1) {
+    vi xs = {1, 2, 3, 4, 5};
+
+    BOOST_TEST((binsearch(xs.end(), xs.begin(), 1) == xs.begin()));
+    BOOST_TEST((binsearch(xs.begin()+3, xs.end()-3, 1) == xs.end()-3));
 }

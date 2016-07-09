@@ -1,8 +1,8 @@
 #include <iterator>
 
-template<typename iterator, typename T>
-iterator binsearch(iterator begin, iterator end, const T &v) {
-    if (begin == end) {return end;}
+template<typename Iterator, typename T>
+Iterator binsearch(Iterator begin, Iterator end, const T &v) {
+    if (begin >= end) {return end;}
 
     const auto save = end;
 
