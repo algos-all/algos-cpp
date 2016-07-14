@@ -38,6 +38,7 @@ class Heap {
 
 public:
     Heap() : Heap(vt()) {}
+    Heap(Key key) : Heap(vt(), key) {}
     Heap(const vt &xs) : Heap(xs, Key()) {}
 
     Heap(const vt &xs, Key key) : xs(xs), key(key) {
