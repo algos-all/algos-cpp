@@ -16,7 +16,8 @@ class Heap {
 
             if (key(*it, *yit)) {break;}
 
-            std::swap(*it, *yit);
+            std::iter_swap(it, yit);
+            std::swap(it, yit);
         }
     }
 
@@ -85,6 +86,9 @@ public:
 
         return ys;
     }
+
+    iterator begin() {return xs.begin();}
+    iterator end() {return xs.end();}
 
     friend std::ostream &
     operator<<(std::ostream &os, const Heap<T, Key> &heap) {

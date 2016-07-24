@@ -4,6 +4,23 @@
 #include "test.hpp"
 #include "heap.hpp"
 
+template <typename Iterator>
+bool is_valid_heap(const Iterator begin, const Iterator end) {
+    for (auto i = begin; i != end; ++i) {
+        auto lchild = i + 2 * std::distance(begin, i) + 1;
+        auto rchild = i + 2 * std::distance(begin, i) + 2;
+
+        if (lchild <= end) {
+            if (*i > *lchild) {return false;}
+        }
+        if (rchild <= end) {
+            if (*i > *rchild) {return false;}
+        }
+    }
+
+    return true;
+}
+
 BOOST_AUTO_TEST_CASE(empty_0) {
     auto heap = Heap<int>();
 
@@ -14,6 +31,26 @@ BOOST_AUTO_TEST_CASE(empty_1) {
     auto heap = Heap<int, std::greater<int>>();
 
     BOOST_TEST(heap.size() == 0);
+}
+
+BOOST_AUTO_TEST_CASE(heap_0) {
+    auto heap = Heap<int>();
+
+    heap.push(1);
+    heap.push(2);
+    heap.push(3);
+
+    BOOST_TEST(is_valid_heap(heap.begin(), heap.end()) == true);
+}
+
+BOOST_AUTO_TEST_CASE(heap_1) {
+    auto heap = Heap<int>();
+
+    heap.push(3);
+    heap.push(2);
+    heap.push(1);
+
+    BOOST_TEST(is_valid_heap(heap.begin(), heap.end()) == true);
 }
 
 BOOST_AUTO_TEST_CASE(top_0) {
