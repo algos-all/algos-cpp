@@ -1,33 +1,37 @@
 #include <random>
+#include <iterator>
 
-using generator = std::mt19937;
-using uniformsz = std::uniform_int_distribution<int>;
-
-template<typename iterator>
-void quicksort(iterator fst, iterator lst) {
-    if (fst >= lst) {return;}
-
-    auto i = fst;
-    auto j = lst;
+namespace sort {
+    using generator = std::mt19937;
 
     generator g(42);
-    uniformsz rval(0, std::distance(i, j));
-    auto pivot = *(fst + rval(g));
 
-    while (i <= j) {
-        for (; *i < pivot; i++);
-        for (; pivot < *j; j--);
+    namespace detail {
+        template<typename RandomIter>
+        void quicksort(RandomIter fst, RandomIter lst) {
+            if (fst >= lst) {return;}
 
-        if (i <= j) {
-            std::swap(*i++, *j--);
+            auto i = fst, j = lst;
+            auto rval = std::uniform_int_distribution<>(0, std::distance(i, j));
+
+            auto pivot = *(fst + rval(g));
+
+            while (i <= j) {
+                for (; *i < pivot; i++);
+                for (; pivot < *j; j--);
+
+                if (i <= j) {
+                    std::iter_swap(i++, j--);
+                }
+            }
+            quicksort(fst, j);
+            quicksort(i, lst);
         }
-    }
-    quicksort(fst, j);
-    quicksort(i, lst);
-}
+    } // namespace detail
 
-template<typename iterator>
-void qsort(iterator begin, iterator end) {
-    if (begin == end) {return;}
-    quicksort(begin, end - 1);
-}
+    template<typename iterator>
+    void qsort(iterator begin, iterator end) {
+        if (begin == end) {return;}
+        detail::quicksort(begin, end - 1);
+    }
+} // namespace sort

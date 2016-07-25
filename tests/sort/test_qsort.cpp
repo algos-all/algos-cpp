@@ -7,7 +7,7 @@
 BOOST_AUTO_TEST_CASE(empty_size) {
     vi xs = {};
 
-    qsort(xs.begin(), xs.end());
+    sort::qsort(xs.begin(), xs.end());
 
     BOOST_TEST(xs.size() == 0);
 }
@@ -15,7 +15,7 @@ BOOST_AUTO_TEST_CASE(empty_size) {
 BOOST_AUTO_TEST_CASE(one_element) {
     vi xs = {42};
 
-    qsort(xs.begin(), xs.end());
+    sort::qsort(xs.begin(), xs.end());
 
     BOOST_TEST(xs.size() == 1);
     BOOST_TEST(xs[0] == 42);
@@ -24,7 +24,7 @@ BOOST_AUTO_TEST_CASE(one_element) {
 BOOST_AUTO_TEST_CASE(two_elements_0) {
     vi xs = {41, 42};
 
-    qsort(xs.begin(), xs.end());
+    sort::qsort(xs.begin(), xs.end());
 
     BOOST_TEST(xs.size() == 2);
     BOOST_TEST((xs[0] == 41 && xs[1] == 42));
@@ -33,7 +33,7 @@ BOOST_AUTO_TEST_CASE(two_elements_0) {
 BOOST_AUTO_TEST_CASE(two_elements_1) {
     vi xs = {42, 41};
 
-    qsort(xs.begin(), xs.end());
+    sort::qsort(xs.begin(), xs.end());
 
     BOOST_TEST(xs.size() == 2);
     BOOST_TEST((xs[0] == 41 && xs[1] == 42));
@@ -42,7 +42,7 @@ BOOST_AUTO_TEST_CASE(two_elements_1) {
 BOOST_AUTO_TEST_CASE(two_elements_2) {
     vi xs = {42, 42};
 
-    qsort(xs.begin(), xs.end());
+    sort::qsort(xs.begin(), xs.end());
 
     BOOST_TEST(xs.size() == 2);
     BOOST_TEST((xs[0] == 42 && xs[1] == 42));
@@ -51,7 +51,7 @@ BOOST_AUTO_TEST_CASE(two_elements_2) {
 BOOST_AUTO_TEST_CASE(two_elements_3) {
     vi xs = {-42, 42};
 
-    qsort(xs.begin(), xs.end());
+    sort::qsort(xs.begin(), xs.end());
 
     BOOST_TEST(xs.size() == 2);
     BOOST_TEST((xs[0] == -42 && xs[1] == 42));
@@ -63,7 +63,7 @@ BOOST_DATA_TEST_CASE(
     vi xs = create_vector(n, s);
     vi ys = xs;
 
-    qsort(xs.begin(), xs.end());
+    sort::qsort(xs.begin(), xs.end());
     std::sort(ys.begin(), ys.end());
 
     BOOST_TEST(xs.size() == ys.size());
@@ -76,7 +76,7 @@ BOOST_DATA_TEST_CASE(
     vi xs = create_vector(n, s);
     vi ys = xs;
 
-    qsort(xs.begin(), xs.end());
+    sort::qsort(xs.begin(), xs.end());
     std::sort(ys.begin(), ys.end());
 
     BOOST_TEST(xs.size() == ys.size());
