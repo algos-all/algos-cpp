@@ -11,6 +11,13 @@ namespace bdata = boost::unit_test::data;
 using vi = std::vector<int>;
 using uint = std::uint32_t;
 
+/**
+ * Create a length-n vector<int> of random integers, use seed s;
+ * Optional:
+ *  Exclude all integers, if any, specified in xs
+ *  Include all integers, if any, specified in ys
+ *  Use random integers from the range [lo, hi)
+ */
 vi create_vector(uint n, uint s, vi xs, vi ys, uint lo, uint hi) {
     std::mt19937 engine(s);
     std::uniform_int_distribution<> uniform(lo, hi);
