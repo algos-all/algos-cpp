@@ -12,8 +12,7 @@ void plunge(
     Key key = Key()
 ) {
     auto ii = iz;
-    auto il = ix;
-    std::advance(il, 2 * std::distance(ix, ii) + 1);
+    auto il = std::next(ix, 2 * std::distance(ix, ii) + 1);
 
     while (il < iy) {
         auto ir = il + 1;
@@ -25,8 +24,7 @@ void plunge(
         std::iter_swap(ii, it);
         std::     swap(ii, it);
 
-        il = ix;
-        std::advance(il, 2 * std::distance(ix, ii) + 1);
+        il = std::next(ix, 2 * std::distance(ix, ii) + 1);
     }
 }
 
@@ -37,8 +35,7 @@ template<
     >
 >
 void heapsort(const RandomIt ix, const RandomIt iy, Key key = Key()) {
-    auto it = ix;
-    std::advance(it, std::distance(ix, iy) / 2);
+    auto it = std::next(ix, std::distance(ix, iy) / 2);
 
     for (; it != ix - 1; --it) {
         plunge(ix, iy, it, key);
