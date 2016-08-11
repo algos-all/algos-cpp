@@ -7,24 +7,20 @@ template<
         typename std::iterator_traits<RandomIt>::value_type
     >
 >
-void plunge(
-    const RandomIt ix, const RandomIt iy, const RandomIt iz,
-    Key key = Key()
-) {
-    auto ii = iz;
-    auto il = std::next(ix, 2 * std::distance(ix, ii) + 1);
+void plunge(RandomIt ix, RandomIt iy, RandomIt iz, Key key = Key()) {
+    auto il = std::next(ix, 2 * std::distance(ix, iz) + 1);
 
     while (il < iy) {
         auto ir = il + 1;
 
         auto it = ir < iy && key(*ir, *il) ? ir : il;
 
-        if (key(*ii, *it)) {break;}
+        if (key(*iz, *it)) {break;}
 
-        std::iter_swap(ii, it);
-        std::     swap(ii, it);
+        std::iter_swap(iz, it);
+        std::     swap(iz, it);
 
-        il = std::next(ix, 2 * std::distance(ix, ii) + 1);
+        il = std::next(ix, 2 * std::distance(ix, iz) + 1);
     }
 }
 
@@ -34,7 +30,7 @@ template<
         typename std::iterator_traits<RandomIt>::value_type
     >
 >
-void heapsort(const RandomIt ix, const RandomIt iy, Key key = Key()) {
+void heapsort(RandomIt ix, RandomIt iy, Key key = Key()) {
     auto it = std::next(ix, std::distance(ix, iy) / 2);
 
     for (; it != ix - 1; --it) {
