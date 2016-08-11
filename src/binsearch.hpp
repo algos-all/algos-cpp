@@ -1,24 +1,22 @@
 #include <iterator>
 
 template<typename Iterator, typename T>
-Iterator binsearch(Iterator begin, Iterator end, const T &v) {
-    if (begin >= end) {return end;}
+Iterator binsearch(Iterator ix, Iterator iy, const T &v) {
+    const auto iz = iy;
 
-    const auto save = end;
-
-    while (begin != end) {
-        const auto mid = begin + std::distance(begin, end) / 2;
+    while (ix < iy) {
+        const auto mid = std::next(ix, std::distance(ix, iy) / 2);
 
         if (*mid == v) {
             return mid;
         }
 
         if (v < *mid) {
-            end = mid;
+            iy = mid;
         } else {
-            begin = mid + 1;
+            ix = mid + 1;
         }
     }
 
-    return save;
+    return iz;
 }
