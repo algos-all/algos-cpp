@@ -10,30 +10,30 @@ class Heap {
     vt xs;
     Key key;
 
-    void swim(const iterator xit, iterator yit) {
-        while (xit != yit) {
-            auto it = xit + std::distance(xit, yit) / 2;
+    void swim(const iterator ix, iterator iy) {
+        while (ix != iy) {
+            auto it = ix + std::distance(ix, iy) / 2;
 
-            if (key(*it, *yit)) {break;}
+            if (key(*it, *iy)) {break;}
 
-            std::iter_swap(it, yit);
-            std::swap(it, yit);
+            std::iter_swap(it, iy);
+            iy = it;
         }
     }
 
-    void sink(const iterator xit, const iterator yit, iterator zit) {
-        auto lit = zit + std::distance(xit, zit) + 1;
+    void sink(const iterator ix, const iterator iy, iterator zit) {
+        auto lit = zit + std::distance(ix, zit) + 1;
 
-        while (lit < yit) {
+        while (lit < iy) {
             auto rit = lit + 1;
 
-            auto it = rit < yit && key(*rit, *lit) ? rit : lit;
+            auto it = rit < iy && key(*rit, *lit) ? rit : lit;
 
             if (key(*zit, *it)) {break;}
 
             std::swap(*it, *zit);
             zit = it;
-            lit = zit + std::distance(xit, zit) + 1;
+            lit = zit + std::distance(ix, zit) + 1;
         }
     }
 
@@ -43,12 +43,12 @@ public:
     Heap(const vt &xs) : Heap(xs, Key()) {}
 
     Heap(const vt &xs, Key key) : xs(xs), key(key) {
-        auto xit = this->xs.rbegin();
-        auto yit = this->xs.rend();
+        auto ix = this->xs.rbegin();
+        auto iy = this->xs.rend();
 
-        auto it = xit + std::distance(xit, yit) / 2;
+        auto it = ix + std::distance(ix, iy) / 2;
 
-        for (; it != yit; ++it) {
+        for (; it != iy; ++it) {
             sink(this->xs.begin(), this->xs.end(), it.base() - 1);
         }
     }
