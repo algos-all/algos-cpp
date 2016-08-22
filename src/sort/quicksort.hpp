@@ -1,33 +1,42 @@
 #include <random>
 #include <iterator>
 
-using generator = std::mt19937;
+namespace detail {
+using gen = std::mt19937;
+using uid = std::uniform_int_distribution<>;
 
-generator g(42);
+gen g(42);
 
-template <
-    typename RandomIt,
-    typename Key = std::less<
-        typename std::iterator_traits<RandomIt>::value_type
-    >
->
-void quicksort(RandomIt ix, RandomIt iy, Key key = Key()) {
-    if (ix == iy) {return;}
+template<typename RandomIt, typename Key=std::less<>>
+void quicksort(RandomIt fst, RandomIt lst, Key key=Key{}) {
+    if (fst >= lst) {
+        return;
+    }
 
-    auto il = ix, ir = iy - 1;
+    auto lft = fst;
+    auto rgt = lst;
 
-    auto rval = std::uniform_int_distribution<>(0, std::distance(il, ir));
-    auto pivot = *(ix + rval(g));
+    auto mid = *std::next(fst, uid(0, std::distance(fst, lst))(g));
 
-    while (il <= ir) {
-        for (; key(*il, pivot); ++il);
-        for (; key(pivot, *ir); --ir);
+    while (lft <= rgt) {
+        for (; key(*lft,  mid); ++lft);
+        for (; key( mid, *rgt); --rgt);
 
-        if (il <= ir) {
-            std::iter_swap(il++, ir--);
+        if (lft <= rgt) {
+            std::iter_swap(lft++, rgt--);
         }
     }
 
-    quicksort(ix, ir + 1);
-    quicksort(il, iy);
+    quicksort(fst, rgt, key);
+    quicksort(lft, lst, key);
+}
+}
+
+template<typename RandomIt, typename Key=std::less<>>
+void quicksort(RandomIt begin, RandomIt end, Key key=Key{}) {
+    if (begin == end) {
+        return;
+    }
+
+    detail::quicksort(begin, std::prev(end), key);
 }
