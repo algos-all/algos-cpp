@@ -2,21 +2,16 @@
 #include <algorithm>
 #include <functional>
 
-template<
-    typename InputIt,
-    typename Key=std::less<
-        typename std::iterator_traits<InputIt>::value_type
-    >
->
-void mergesort(InputIt ix, InputIt iy, Key key=Key()) {
-    if (ix == iy || ix + 1 == iy) {
+template<typename RandomIt, typename Key=std::less<>>
+void mergesort(RandomIt fst, RandomIt lst, Key key=Key{}) {
+    if (fst == lst || std::next(fst) == lst) {
         return;
     }
 
-    auto iz = std::next(ix, std::distance(ix, iy) / 2);
+    auto it = std::next(fst, std::distance(fst, lst) / 2);
 
-    mergesort(ix, iz, key);
-    mergesort(iz, iy, key);
+    mergesort(fst, it, key);
+    mergesort(it, lst, key);
 
-    std::inplace_merge(ix, iz, iy, key);
+    std::inplace_merge(fst, it, lst, key);
 }
