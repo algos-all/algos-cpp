@@ -1,13 +1,8 @@
 #include <iterator>
 #include <functional>
 
-template<
-    class RandomIt,
-    class Key=std::less_equal<
-        typename std::iterator_traits<RandomIt>::value_type
-    >
->
-void plunge(RandomIt ix, RandomIt iy, RandomIt iz, Key key = Key()) {
+template<class RandomIt, class Key=std::less<>>
+void plunge(RandomIt ix, RandomIt iy, RandomIt iz, Key key=Key{}) {
     auto il = std::next(ix, 2 * std::distance(ix, iz) + 1);
 
     while (il < iy) {
@@ -24,13 +19,8 @@ void plunge(RandomIt ix, RandomIt iy, RandomIt iz, Key key = Key()) {
     }
 }
 
-template<
-    class RandomIt,
-    class Key=std::greater_equal<
-        typename std::iterator_traits<RandomIt>::value_type
-    >
->
-void heapsort(RandomIt ix, RandomIt iy, Key key = Key()) {
+template<class RandomIt, class Key=std::greater<>>
+void heapsort(RandomIt ix, RandomIt iy, Key key=Key{}) {
     auto it = std::next(ix, std::distance(ix, iy) / 2);
 
     for (; it != ix - 1; --it) {
