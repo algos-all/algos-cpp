@@ -19,16 +19,46 @@ void plunge(RandomIt ix, RandomIt iy, RandomIt iz, Key key=Key{}) {
     }
 }
 
+template<class RandomIt, class Key=std::less<>>
+void makeheap(RandomIt ix, RandomIt iy, Key key=Key{}) {
+    if (ix >= iy) return;
+
+    using namespace std;
+
+    for (auto iz = next(ix, distance(ix, iy) / 2); iz >= ix; --iz) {
+        plunge(ix, iy, iz, key);
+    }
+}
+
+template<class RandomIt, class Key=std::less<>>
+void pushheap(RandomIt ix, RandomIt iy, Key key=Key{}) {
+    iy = std::prev(iy);
+
+    while (iy > ix) {
+        auto it = std::next(ix, std::distance(ix, iy) / 2);
+
+        if (key(*it, *iy)) return;
+
+        std::iter_swap(it, iy);
+        iy = it;
+    }
+}
+
+template<class RandomIt, class Key=std::less<>>
+void popheap(RandomIt ix, RandomIt iy, Key key=Key{}) {
+    if (ix >= iy) return;
+
+    iy = std::prev(iy);
+
+    std::iter_swap(ix, iy);
+    plunge(ix, iy, ix, key);
+}
+
 template<class RandomIt, class Key=std::greater<>>
 void heapsort(RandomIt ix, RandomIt iy, Key key=Key{}) {
-    auto it = std::next(ix, std::distance(ix, iy) / 2);
+    makeheap(ix, iy, key);
 
-    for (; it != ix - 1; --it) {
-        plunge(ix, iy, it, key);
-    }
-
-    for (it = iy - 1; it != ix - 1; --it) {
-        std::iter_swap(it, ix);
-        plunge(ix, it, ix, key);
+    for (auto it = iy; it != ix; --it) {
+        popheap(ix, it, key);
     }
 }
