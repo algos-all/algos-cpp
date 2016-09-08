@@ -4,6 +4,8 @@
 #include "../test.hpp"
 #include "sort/heapsort.hpp"
 
+using bdata::make;
+
 BOOST_AUTO_TEST_CASE(empty_size) {
     vi xs = {};
 
@@ -21,7 +23,43 @@ BOOST_AUTO_TEST_CASE(one_element) {
     BOOST_TEST(xs[0] == 42);
 }
 
-using bdata::make;
+BOOST_AUTO_TEST_CASE(pushheap0) {
+    vi xs = {};
+
+    for (auto i = 10; i != 0; --i) {
+        xs.push_back(i);
+
+        pushheap(xs.begin(), xs.end());
+    }
+
+    BOOST_TEST(std::is_heap(xs.begin(), xs.end(), std::greater<>{}));
+}
+
+BOOST_DATA_TEST_CASE(
+    pushheap_random_0, bdata::xrange(1, 256) * bdata::xrange(100), n, s
+) {
+    vi xs = create_vector(n, s);
+
+    for (auto it = xs.begin(); it != xs.end(); ++it) {
+        pushheap(xs.begin(), it);
+    }
+
+    BOOST_TEST(std::is_heap(xs.begin(), xs.end(), std::greater<>{}));
+}
+
+BOOST_DATA_TEST_CASE(
+    pushheap_random_1, bdata::xrange(1, 256) * bdata::xrange(100), n, s
+) {
+    vi xs = create_vector(14, 0);
+
+    for (auto it = xs.begin(); it <= xs.end(); ++it) {
+        pushheap(xs.begin(), it, std::greater<int>{});
+    }
+
+    // for (auto x: xs) {std::cerr << x << " ";} std::cerr << std::endl;
+
+    BOOST_TEST(std::is_heap(xs.begin(), xs.end(), std::less<int>{}));
+}
 
 BOOST_DATA_TEST_CASE(
     two_elements_0,

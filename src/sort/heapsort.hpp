@@ -13,7 +13,7 @@ void plunge(RandomIt ix, RandomIt iy, RandomIt iz, Key key=Key{}) {
         if (key(*iz, *it)) {break;}
 
         std::iter_swap(iz, it);
-        std::     swap(iz, it);
+        iz = it;
 
         il = std::next(ix, 2 * std::distance(ix, iz) + 1);
     }
@@ -32,15 +32,17 @@ void makeheap(RandomIt ix, RandomIt iy, Key key=Key{}) {
 
 template<class RandomIt, class Key=std::less<>>
 void pushheap(RandomIt ix, RandomIt iy, Key key=Key{}) {
+    if (ix >= iy) return;
+
     iy = std::prev(iy);
 
-    while (iy > ix) {
-        auto it = std::next(ix, std::distance(ix, iy) / 2);
+    while (ix != iy) {
+        auto iz = std::next(ix, (std::distance(ix, iy) - 1) / 2);
 
-        if (key(*it, *iy)) return;
+        if (key(*iz, *iy)) return;
 
-        std::iter_swap(it, iy);
-        iy = it;
+        std::iter_swap(iz, iy);
+        iy = iz;
     }
 }
 
