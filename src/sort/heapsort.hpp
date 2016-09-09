@@ -6,16 +6,16 @@ void plunge(RandomIt ix, RandomIt iy, RandomIt iz, Key key=Key{}) {
     auto il = std::next(ix, 2 * std::distance(ix, iz) + 1);
 
     while (il < iy) {
-        auto ir = il + 1;
+        auto ir = std::next(il);
 
         auto it = ir < iy && key(*ir, *il) ? ir : il;
 
-        if (key(*iz, *it)) {break;}
+        if (key(*iz, *it)) return;
 
         std::iter_swap(iz, it);
-        iz = it;
 
-        il = std::next(ix, 2 * std::distance(ix, iz) + 1);
+        iz = it;
+        il = std::next(ix, 2 * std::distance(ix, it) + 1);
     }
 }
 
