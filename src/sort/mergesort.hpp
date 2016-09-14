@@ -3,15 +3,15 @@
 #include <functional>
 
 template<typename RandomIt, typename Key=std::less<>>
-void mergesort(RandomIt fst, RandomIt lst, Key key=Key{}) {
-    if (fst == lst || std::next(fst) == lst) {
+void mergesort(RandomIt ix, RandomIt iy, Key key=Key{}) {
+    if (ix == iy || std::next(ix) == iy) {
         return;
     }
 
-    auto it = std::next(fst, std::distance(fst, lst) / 2);
+    auto it = std::next(ix, std::distance(ix, iy) / 2);
 
-    mergesort(fst, it, key);
-    mergesort(it, lst, key);
+    mergesort(ix, it, key);
+    mergesort(it, iy, key);
 
-    std::inplace_merge(fst, it, lst, key);
+    std::inplace_merge(ix, it, iy, key);
 }
