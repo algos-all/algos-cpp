@@ -49,9 +49,9 @@ struct DisjointSetUnion {
         if (val1 == val2) return;
 
         if (ws[val1] < ws[val2])
-                std::swap(val1, val2);
+            std::swap(val1, val2);
 
-        xs[val1] = val2;
+        xs[val2] = val1;
         ws[val2] += ws[val1];
     }
 };
