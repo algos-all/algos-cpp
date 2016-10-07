@@ -36,29 +36,31 @@ BOOST_AUTO_TEST_CASE(pushheap0) {
 }
 
 BOOST_DATA_TEST_CASE(
-    pushheap_random_0, bdata::xrange(1, 256) * bdata::xrange(100), n, s
+    pushheap_random_0, bdata::xrange(1, 512) * bdata::xrange(100), n, s
 ) {
     vi xs = create_vector(n, s);
+    vi ys = xs;
 
-    for (auto it = xs.begin(); it != xs.end(); ++it) {
-        pushheap(xs.begin(), it);
+    for (auto it = xs.begin(); it <= xs.end(); ++it) {
+        pushheap(xs.begin(), it, std::less<>{});
     }
 
+    BOOST_TEST(equal_contents(xs, ys), true);
     BOOST_TEST(std::is_heap(xs.begin(), xs.end(), std::greater<>{}));
 }
 
 BOOST_DATA_TEST_CASE(
-    pushheap_random_1, bdata::xrange(1, 256) * bdata::xrange(100), n, s
+    pushheap_random_1, bdata::xrange(1, 512) * bdata::xrange(100), n, s
 ) {
-    vi xs = create_vector(14, 0);
+    vi xs = create_vector(n, s);
+    vi ys = xs;
 
     for (auto it = xs.begin(); it <= xs.end(); ++it) {
-        pushheap(xs.begin(), it, std::greater<int>{});
+        pushheap(xs.begin(), it, std::greater<>{});
     }
 
-    // for (auto x: xs) {std::cerr << x << " ";} std::cerr << std::endl;
-
-    BOOST_TEST(std::is_heap(xs.begin(), xs.end(), std::less<int>{}));
+    BOOST_TEST(equal_contents(xs, ys), true);
+    BOOST_TEST(std::is_heap(xs.begin(), xs.end(), std::less<>{}));
 }
 
 BOOST_DATA_TEST_CASE(

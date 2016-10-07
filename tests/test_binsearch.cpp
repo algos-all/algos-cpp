@@ -67,6 +67,8 @@ BOOST_DATA_TEST_CASE(
 
     vi zs = create_vector(n, s, xs, ys);
 
+    std::sort(zs.begin(), zs.end());
+
     for (auto x : xs) {
         BOOST_TEST((binsearch(zs.begin(), zs.end(), x) == zs.end()));
     }
