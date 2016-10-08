@@ -27,10 +27,6 @@ struct BinarySearchTree {
     BinarySearchTree() : root() {}
 
     std::pair<NodePtr, NodePtr> get_node_with_parent(const Key& key) {
-        if (root == nullptr) {
-            return std::make_pair(nullptr, nullptr);
-        }
-
         NodePtr node = root, parent = nullptr;
 
         while (node != nullptr) {
