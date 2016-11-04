@@ -20,13 +20,13 @@ void plunge(RandomIt ix, RandomIt iy, RandomIt iz, Key key=Key{}) {
 }
 
 template<class RandomIt, class Key=std::less<>>
-void makeheap(RandomIt ix, RandomIt iy, Key key=Key{}) {
-    if (ix >= iy) return;
+void makeheap(RandomIt fst, RandomIt lst, Key key=Key{}) {
+    if (fst == lst) return;
 
-    using namespace std;
+    auto cur = std::next(fst, std::distance(fst, lst) / 2);
 
-    for (auto iz = next(ix, distance(ix, iy) / 2); iz >= ix; --iz) {
-        plunge(ix, iy, iz, key);
+    for (; cur >= fst; cur = std::prev(cur)) {
+        plunge(fst, lst, cur, key);
     }
 }
 
