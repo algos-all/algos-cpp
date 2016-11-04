@@ -47,13 +47,13 @@ void pushheap(RandomIt ix, RandomIt iy, Key key=Key{}) {
 }
 
 template<class RandomIt, class Key=std::less<>>
-void popheap(RandomIt ix, RandomIt iy, Key key=Key{}) {
-    if (ix >= iy) return;
+void popheap(RandomIt fst, RandomIt lst, Key key=Key{}) {
+    if (fst == lst) return;
 
-    iy = std::prev(iy);
+    lst = std::prev(lst);
 
-    std::iter_swap(ix, iy);
-    plunge(ix, iy, ix, key);
+    std::iter_swap(fst, lst);
+    plunge(fst, lst, fst, key);
 }
 
 template<class RandomIt, class Key=std::greater<>>
