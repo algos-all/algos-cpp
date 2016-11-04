@@ -5,14 +5,14 @@
 #include "sort/quicksort.hpp"
 
 
-std::vector<sort_fun_inc> inc_sorts = {
-    quicksort0<vi::iterator, std::less<>>,
-    quicksort1<vi::iterator, std::less<>>
+std::vector<sort_fun_rnd_inc> inc_sorts = {
+    quicksort0<vi::iterator, std::less<int>, int>,
+    quicksort1<vi::iterator, std::less<int>, int>
 };
 
-std::vector<sort_fun_dec> dec_sorts = {
-    quicksort0<vi::iterator, std::greater<>>,
-    quicksort1<vi::iterator, std::greater<>>
+std::vector<sort_fun_rnd_dec> dec_sorts = {
+    quicksort0<vi::iterator, std::greater<int>, int>,
+    quicksort1<vi::iterator, std::greater<int>, int>
 };
 
 using bdata::make;
@@ -20,7 +20,7 @@ using bdata::make;
 BOOST_DATA_TEST_CASE(inc_empty_size_0, make(inc_sorts), sort) {
     vi xs = {};
 
-    sort(xs.begin(), xs.end(), std::less<>{});
+    sort(xs.begin(), xs.end(), std::less<int>{}, 42);
 
     BOOST_TEST(xs.size() == 0);
 }
@@ -28,7 +28,7 @@ BOOST_DATA_TEST_CASE(inc_empty_size_0, make(inc_sorts), sort) {
 BOOST_DATA_TEST_CASE(dec_empty_size_0, make(dec_sorts), sort) {
     vi xs = {};
 
-    sort(xs.begin(), xs.end(), std::greater<>{});
+    sort(xs.begin(), xs.end(), std::greater<int>{}, 42);
 
     BOOST_TEST(xs.size() == 0);
 }
@@ -36,7 +36,7 @@ BOOST_DATA_TEST_CASE(dec_empty_size_0, make(dec_sorts), sort) {
 BOOST_DATA_TEST_CASE(inc_one_element, make(inc_sorts), sort) {
     vi xs = {42};
 
-    sort(xs.begin(), xs.end(), std::less<>{});
+    sort(xs.begin(), xs.end(), std::less<int>{}, 42);
 
     BOOST_TEST(xs.size() == 1);
     BOOST_TEST(xs[0] == 42);
@@ -45,7 +45,7 @@ BOOST_DATA_TEST_CASE(inc_one_element, make(inc_sorts), sort) {
 BOOST_DATA_TEST_CASE(dec_one_element, make(dec_sorts), sort) {
     vi xs = {42};
 
-    sort(xs.begin(), xs.end(), std::greater<>{});
+    sort(xs.begin(), xs.end(), std::greater<int>{}, 42);
 
     BOOST_TEST(xs.size() == 1);
     BOOST_TEST(xs[0] == 42);
@@ -59,8 +59,8 @@ BOOST_DATA_TEST_CASE(
     vi xs = {a, b};
     vi ys = xs;
 
-    sort(xs.begin(), xs.end(), std::less<>{});
-    std::sort(ys.begin(), ys.end(), std::less<>{});
+    sort(xs.begin(), xs.end(), std::less<int>{}, 42);
+    std::sort(ys.begin(), ys.end(), std::less<int>{});
 
     BOOST_TEST(xs.size() == 2);
     BOOST_TEST(std::equal(xs.begin(), xs.end(), ys.begin()) == true);
@@ -74,8 +74,8 @@ BOOST_DATA_TEST_CASE(
     vi xs = {a, b};
     vi ys = xs;
 
-    sort(xs.begin(), xs.end(), std::greater<>{});
-    std::sort(ys.begin(), ys.end(), std::greater<>{});
+    sort(xs.begin(), xs.end(), std::greater<int>{}, 42);
+    std::sort(ys.begin(), ys.end(), std::greater<int>{});
 
     BOOST_TEST(xs.size() == 2);
     BOOST_TEST(std::equal(xs.begin(), xs.end(), ys.begin()) == true);
@@ -95,8 +95,8 @@ BOOST_DATA_TEST_CASE(
     vi xs = {a, b};
     vi ys = xs;
 
-    sort(xs.begin(), xs.end(), std::less<>{});
-    std::sort(ys.begin(), ys.end(), std::less<>{});
+    sort(xs.begin(), xs.end(), std::less<int>{}, 42);
+    std::sort(ys.begin(), ys.end(), std::less<int>{});
 
     BOOST_TEST(xs.size() == 2);
     BOOST_TEST(std::equal(xs.begin(), xs.end(), ys.begin()) == true);
@@ -116,8 +116,8 @@ BOOST_DATA_TEST_CASE(
     vi xs = {a, b};
     vi ys = xs;
 
-    sort(xs.begin(), xs.end(), std::greater<>{});
-    std::sort(ys.begin(), ys.end(), std::greater<>{});
+    sort(xs.begin(), xs.end(), std::greater<int>{}, 42);
+    std::sort(ys.begin(), ys.end(), std::greater<int>{});
 
     BOOST_TEST(xs.size() == 2);
     BOOST_TEST(std::equal(xs.begin(), xs.end(), ys.begin()) == true);
@@ -139,8 +139,8 @@ BOOST_DATA_TEST_CASE(
     vi xs = {a, b, c};
     vi ys = xs;
 
-    sort(xs.begin(), xs.end(), std::less<>{});
-    std::sort(ys.begin(), ys.end(), std::less<>{});
+    sort(xs.begin(), xs.end(), std::less<int>{}, 42);
+    std::sort(ys.begin(), ys.end(), std::less<int>{});
 
     BOOST_TEST(xs.size() == 3);
     BOOST_TEST(std::equal(xs.begin(), xs.end(), ys.begin()) == true);
@@ -162,8 +162,8 @@ BOOST_DATA_TEST_CASE(
     vi xs = {a, b, c};
     vi ys = xs;
 
-    sort(xs.begin(), xs.end(), std::greater<>{});
-    std::sort(ys.begin(), ys.end(), std::greater<>{});
+    sort(xs.begin(), xs.end(), std::greater<int>{}, 42);
+    std::sort(ys.begin(), ys.end(), std::greater<int>{});
 
     BOOST_TEST(xs.size() == 3);
     BOOST_TEST(std::equal(xs.begin(), xs.end(), ys.begin()) == true);
@@ -177,8 +177,8 @@ BOOST_DATA_TEST_CASE(
     vi xs = create_vector(n, s);
     vi ys = xs;
 
-    sort(xs.begin(), xs.end(), std::less<>{});
-    std::sort(ys.begin(), ys.end(), std::less<>{});
+    sort(xs.begin(), xs.end(), std::less<int>{}, 42);
+    std::sort(ys.begin(), ys.end(), std::less<int>{});
 
     BOOST_TEST(xs.size() == ys.size());
     BOOST_TEST(std::equal(xs.begin(), xs.end(), ys.begin()) == true);
@@ -192,8 +192,8 @@ BOOST_DATA_TEST_CASE(
     vi xs = create_vector(n, s);
     vi ys = xs;
 
-    sort(xs.begin(), xs.end(), std::greater<>{});
-    std::sort(ys.begin(), ys.end(), std::greater<>{});
+    sort(xs.begin(), xs.end(), std::greater<int>{}, 42);
+    std::sort(ys.begin(), ys.end(), std::greater<int>{});
 
     BOOST_TEST(xs.size() == ys.size());
     BOOST_TEST(std::equal(xs.begin(), xs.end(), ys.begin()) == true);
@@ -207,8 +207,8 @@ BOOST_DATA_TEST_CASE(
     vi xs = create_vector(n, s);
     vi ys = xs;
 
-    sort(xs.begin(), xs.end(), std::less<>{});
-    std::sort(ys.begin(), ys.end(), std::less<>{});
+    sort(xs.begin(), xs.end(), std::less<int>{}, 42);
+    std::sort(ys.begin(), ys.end(), std::less<int>{});
 
     BOOST_TEST(xs.size() == ys.size());
     BOOST_TEST(std::equal(xs.begin(), xs.end(), ys.begin()) == true);
@@ -222,8 +222,8 @@ BOOST_DATA_TEST_CASE(
     vi xs = create_vector(n, s);
     vi ys = xs;
 
-    sort(xs.begin(), xs.end(), std::greater<>{});
-    std::sort(ys.begin(), ys.end(), std::greater<>{});
+    sort(xs.begin(), xs.end(), std::greater<int>{}, 42);
+    std::sort(ys.begin(), ys.end(), std::greater<int>{});
 
     BOOST_TEST(xs.size() == ys.size());
     BOOST_TEST(std::equal(xs.begin(), xs.end(), ys.begin()) == true);
