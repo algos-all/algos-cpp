@@ -1,26 +1,22 @@
 #include <iterator>
-#include <iostream>
 
-template<class RandomIt, typename T>
-RandomIt binsearch(RandomIt fst, RandomIt lst, const T &v) {
-    if (fst == lst)
-        return lst;
+template<class RandomIt, class Val>
+RandomIt binsearch(RandomIt fst, RandomIt lst, const Val& val) {
+    if (fst == lst) return lst;
 
-    auto l = fst, r = lst - 1;
+    auto lft = fst, rgt = std::prev(lst);
 
-    while (l <= r) {
-        const auto mid = std::next(l, std::distance(l, r) / 2);
+    while (lft <= rgt) {
+        const auto mid = std::next(lft, std::distance(lft, rgt) / 2);
 
-        if (*mid == v) {
+        if (val == *mid)
             return mid;
-        }
 
-        if (v < *mid) {
-            r = mid - 1;
-        } else {
-            l = mid + 1;
-        }
+        if (val < *mid)
+            rgt = std::prev(mid);
+        else
+            lft = std::next(mid);
     }
 
-    return lst;
+    return lst; // not found
 }
