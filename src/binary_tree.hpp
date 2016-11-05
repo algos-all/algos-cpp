@@ -31,7 +31,7 @@ struct BinarySearchTree {
 
         while (node != nullptr) {
             if (key == node->key) {
-                return std::make_pair(node, parent);
+                return {node, parent};
             }
 
             if (key < node->key) {
@@ -41,7 +41,7 @@ struct BinarySearchTree {
             }
         }
 
-        return std::make_pair(nullptr, parent);
+        return {nullptr, parent};
     }
 
     Val& at(const Key& key) {
