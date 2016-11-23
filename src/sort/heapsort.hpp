@@ -2,20 +2,20 @@
 #include <functional>
 
 template<class RandomIt, class Key=std::less<>>
-void plunge(RandomIt ix, RandomIt iy, RandomIt iz, Key key=Key{}) {
-    auto il = std::next(ix, 2 * std::distance(ix, iz) + 1);
+void plunge(RandomIt fst, RandomIt lst, RandomIt cur, Key key=Key{}) {
+    auto l = std::next(fst, 2 * std::distance(fst, cur) + 1);
 
-    while (il < iy) {
-        auto ir = std::next(il);
+    while (l < lst) {
+        auto r = std::next(l);
 
-        auto it = ir < iy && key(*ir, *il) ? ir : il;
+        auto it = r < lst && key(*r, *l) ? r : l;
 
-        if (key(*iz, *it)) return;
+        if (key(*cur, *it)) return;
 
-        std::iter_swap(iz, it);
+        std::iter_swap(cur, it);
 
-        iz = it;
-        il = std::next(ix, 2 * std::distance(ix, it) + 1);
+        cur = it;
+        l = std::next(fst, 2 * std::distance(fst, it) + 1);
     }
 }
 
@@ -23,26 +23,26 @@ template<class RandomIt, class Key=std::less<>>
 void makeheap(RandomIt fst, RandomIt lst, Key key=Key{}) {
     if (fst == lst) return;
 
-    auto cur = std::next(fst, std::distance(fst, lst) / 2);
+    using namespace std;
 
-    for (; cur >= fst; cur = std::prev(cur)) {
-        plunge(fst, lst, cur, key);
+    for (auto x = next(fst, distance(fst, lst) / 2); x >= fst; --x) {
+        plunge(fst, lst, x, key);
     }
 }
 
 template<class RandomIt, class Key=std::less<>>
-void pushheap(RandomIt ix, RandomIt iy, Key key=Key{}) {
-    if (ix >= iy) return;
+void pushheap(RandomIt fst, RandomIt lst, Key key=Key{}) {
+    if (fst == lst) return;
 
-    iy = std::prev(iy);
+    lst = std::prev(lst);
 
-    while (ix != iy) {
-        auto iz = std::next(ix, (std::distance(ix, iy) - 1) / 2);
+    while (fst != lst) {
+        auto cur = std::next(fst, (std::distance(fst, lst) - 1) / 2);
 
-        if (key(*iz, *iy)) return;
+        if (key(*cur, *lst)) return;
 
-        std::iter_swap(iz, iy);
-        iy = iz;
+        std::iter_swap(cur, lst);
+        lst = cur;
     }
 }
 
@@ -57,10 +57,12 @@ void popheap(RandomIt fst, RandomIt lst, Key key=Key{}) {
 }
 
 template<class RandomIt, class Key=std::greater<>>
-void heapsort(RandomIt ix, RandomIt iy, Key key=Key{}) {
-    makeheap(ix, iy, key);
+void heapsort(RandomIt fst, RandomIt lst, Key key=Key{}) {
+    if (fst == lst) return;
 
-    for (auto it = iy; it != ix; --it) {
-        popheap(ix, it, key);
+    makeheap(fst, lst, key);
+
+    for (auto cur = lst; cur != fst; --cur) {
+        popheap(fst, cur, key);
     }
 }
