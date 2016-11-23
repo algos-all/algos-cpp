@@ -80,6 +80,26 @@ BOOST_DATA_TEST_CASE(
     }
 }
 
+BOOST_DATA_TEST_CASE(
+    lb_len_100, bdata::make(lengths) * bdata::xrange(100), n, s
+) {
+    vi xs = create_vector(n, s);
+    vi zs = create_vector(n, s);
+
+    std::sort(xs.begin(), xs.end());
+
+    auto fst = xs.begin();
+    auto lst = xs.end();
+
+    for (auto x: xs) {
+        xlower_bound(fst, lst, x) == std::lower_bound(fst, lst, x);
+    }
+
+    for (auto z: zs) {
+        xlower_bound(fst, lst, z) == std::lower_bound(fst, lst, z);
+    }
+}
+
 BOOST_AUTO_TEST_CASE(swapped_iterators_0) {
     vi xs = {1, 2, 3, 4, 5};
 
