@@ -57,34 +57,49 @@ BOOST_AUTO_TEST_CASE(big_bool) {
     }
 }
 
-vi lengths = {9, 10, 11, 41, 42, 43, 50, 99, 100, 101, 10000};
+vi lengths = {
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+    11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+    21, 23, 30, 35, 37, 38, 40, 41, 42, 43,
+    50, 51, 51, 57, 59, 60, 64, 68, 70, 73,
+    75, 76, 77, 83, 84, 92, 93, 94, 98, 99,
+    100, 101, 111, 121, 123, 128, 129, 149,
+    10000, 10115, 10223, 10583, 15877, 20000
+};
 
 BOOST_DATA_TEST_CASE(
-    random_len_100, bdata::make(lengths) * bdata::xrange(100), n, s
+    random_100_retries, bdata::make(lengths) * bdata::xrange(100), n, s
 ) {
-    vi xs = {1, 2, 3};
-    vi ys = {4, 5, 6};
+    vi xs = create_vector(n, s);
 
-    vi zs = create_vector(n, s, xs, ys);
+    std::sort(xs.begin(), xs.end());
+    xs.erase(std::unique(xs.begin(), xs.end()), xs.end());
 
-    std::sort(zs.begin(), zs.end());
+    auto fst = xs.begin(), lst = xs.end();
 
-    for (auto x : xs) {
-        BOOST_TEST((binsearch(zs.begin(), zs.end(), x) == zs.end()));
+    for (auto x: xs) {
+        BOOST_TEST(
+            (binsearch(fst, lst, x) == std::lower_bound(fst, lst, x))
+        );
     }
 
-    for (auto y : ys) {
-        const auto result = binsearch(zs.begin(), zs.end(), y);
-        BOOST_TEST((result != zs.end()));
-        BOOST_TEST(*result == y);
+    vi ys = create_vector(100, s + 1);
+
+    for (auto y: ys) {
+        const auto t = std::lower_bound(fst, lst, y);
+
+        if (*t == y) {
+            BOOST_TEST((*binsearch(fst, lst, y) == y));
+        } else {
+            BOOST_TEST((binsearch(fst, lst, y) == lst));
+        }
     }
 }
 
 BOOST_DATA_TEST_CASE(
-    lb_len_100, bdata::make(lengths) * bdata::xrange(100), n, s
+    lb_100_retries, bdata::make(lengths) * bdata::xrange(100), n, s
 ) {
     vi xs = create_vector(n, s);
-    vi zs = create_vector(n, s);
 
     std::sort(xs.begin(), xs.end());
 
@@ -95,8 +110,31 @@ BOOST_DATA_TEST_CASE(
         xlower_bound(fst, lst, x) == std::lower_bound(fst, lst, x);
     }
 
-    for (auto z: zs) {
-        xlower_bound(fst, lst, z) == std::lower_bound(fst, lst, z);
+    vi ys = create_vector(100, s + 1);
+
+    for (auto y: ys) {
+        xlower_bound(fst, lst, y) == std::lower_bound(fst, lst, y);
+    }
+}
+
+BOOST_DATA_TEST_CASE(
+    ub_100_retries, bdata::make(lengths) * bdata::xrange(100), n, s
+) {
+    vi xs = create_vector(n, s);
+
+    std::sort(xs.begin(), xs.end());
+
+    auto fst = xs.begin();
+    auto lst = xs.end();
+
+    for (auto x: xs) {
+        xupper_bound(fst, lst, x) == std::upper_bound(fst, lst, x);
+    }
+
+    vi ys = create_vector(100, s + 1);
+
+    for (auto y: ys) {
+        xupper_bound(fst, lst, y) == std::upper_bound(fst, lst, y);
     }
 }
 
