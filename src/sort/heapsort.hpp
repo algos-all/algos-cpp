@@ -3,19 +3,19 @@
 
 template<class RandomIt, class Key=std::less<>>
 void plunge(RandomIt fst, RandomIt lst, RandomIt cur, Key key=Key{}) {
-    auto l = std::next(fst, 2 * std::distance(fst, cur) + 1);
+    auto lft = std::next(fst, 2 * std::distance(fst, cur) + 1);
 
-    while (l < lst) {
-        auto r = std::next(l);
+    while (lft < lst) {
+        auto rgt = std::next(lft);
 
-        auto it = r < lst && key(*r, *l) ? r : l;
+        auto child = rgt < lst && key(*rgt, *lft) ? rgt : lft;
 
-        if (key(*cur, *it)) return;
+        if (key(*cur, *child)) return;
 
-        std::iter_swap(cur, it);
+        std::iter_swap(cur, child);
 
-        cur = it;
-        l = std::next(fst, 2 * std::distance(fst, it) + 1);
+        cur = child;
+        lft = std::next(fst, 2 * std::distance(fst, cur) + 1);
     }
 }
 
