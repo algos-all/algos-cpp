@@ -14,7 +14,7 @@ struct BinarySearchNode {
     NodePtr rgt;
 
     BinarySearchNode(Key key, Val val)
-        : key(key), val(val), lft(), rgt() {}
+        : key{key}, val{val}, lft{}, rgt{} {}
 };
 
 template<class Key=int, class Val=int>
@@ -24,7 +24,7 @@ struct BinarySearchTree {
 
     NodePtr root;
 
-    BinarySearchTree() : root() {}
+    BinarySearchTree() : root{} {}
 
     std::pair<NodePtr, NodePtr> get_node_with_parent(const Key& key) {
         NodePtr node = root, parent = nullptr;
@@ -61,11 +61,11 @@ struct BinarySearchTree {
         std::tie(node, parent) = get_node_with_parent(key);
 
         if (node == nullptr && parent == nullptr) {
-            root = std::make_shared<Node>(Node(key, Val()));
+            root = std::make_shared<Node>(Node(key, Val{}));
 
             return root->val;
         } else if (node == nullptr) {
-            node = std::make_shared<Node>(Node(key, Val()));
+            node = std::make_shared<Node>(Node(key, Val{}));
 
             if (key < parent->key) {
                 parent->lft = node;
