@@ -44,17 +44,14 @@ template<class RandomIt, class Val>
 RandomIt xupper_bound(RandomIt fst, RandomIt lst, const Val& val) {
     if (fst == lst) return lst;
 
-    auto lft = fst, rgt = std::prev(lst);
+    while (fst < lst) {
+        const auto mid = std::next(fst, std::distance(fst, lst) / 2);
 
-    while (lft <= rgt) {
-        const auto mid = std::next(lft, std::distance(lft, rgt) / 2);
-
-        if (*mid <= val) {
-            lft = std::next(mid);
-        } else {
-            rgt = std::prev(mid);
-        }
+        if (*mid <= val)
+            fst = mid + 1;
+        else
+            lst = mid;
     }
 
-    return lft;
+    return fst;
 }
