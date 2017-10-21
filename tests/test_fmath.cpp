@@ -58,3 +58,24 @@ BOOST_AUTO_TEST_CASE(gcf_primes) {
         }
     }
 }
+
+BOOST_AUTO_TEST_CASE(xgcf00) {
+    const auto result = xgcf(0, 0);
+
+    BOOST_TEST(result[0] == 0);
+    BOOST_TEST(result[1] == 1);
+    BOOST_TEST(result[2] == 0);
+}
+
+
+BOOST_DATA_TEST_CASE(xgcf_random, bdata::make(100), i) {
+    std::mt19937 engine(i);
+    std::uniform_int_distribution<> uniform(-1'000'000, 1'000'000);
+
+    const auto x = uniform(engine);
+    const auto y = uniform(engine);
+
+    const auto result = xgcf(x, y);
+
+    BOOST_TEST(result[0] == result[1] * x + result[2] * y);
+}
