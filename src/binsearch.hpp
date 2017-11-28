@@ -23,21 +23,19 @@ RandomIt binsearch(RandomIt fst, RandomIt lst, const Val& val) {
 
 template<class RandomIt, class Val>
 RandomIt xlower_bound(RandomIt fst, RandomIt lst, const Val& val) {
-    if (fst == lst) return lst;
+    if (fst == lst)
+        return lst;
 
-    auto lft = fst, rgt = std::prev(lst);
+    while (fst < lst) {
+        const auto mid = std::next(fst, std::distance(fst, lst) / 2);
 
-    while (lft <= rgt) {
-        const auto mid = std::next(lft, std::distance(lft, rgt) / 2);
-
-        if (*mid < val) {
-            lft = std::next(mid);
-        } else {
-            rgt = std::prev(mid);
-        }
+        if (val <= *mid)
+            lst = mid;
+        else
+            fst = mid + 1;
     }
 
-    return lft; // lower bound (if it exists) or past-the-end
+    return fst; // lower bound (if it exists) or past-the-end
 }
 
 template<class RandomIt, class Val>
