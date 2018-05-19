@@ -5,6 +5,7 @@
 
 template<typename Node, typename Weight>
 class WeightedGraph : public AbstractWeightedGraph<Node, Weight> {
+
 public:
     using graph = AbstractWeightedGraph<Node, Weight>;
 

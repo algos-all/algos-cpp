@@ -4,11 +4,14 @@
 
 template<typename Node>
 class AbstractGraph {
+
 public:
     using nodes = std::vector<Node>;
     using edges = std::unordered_map<Node, nodes>;
+
 protected:
     edges es;
+
 public:
     AbstractGraph () : es(edges()) {};
     AbstractGraph (edges es) : es(es) {}
@@ -32,13 +35,16 @@ public:
 
 template<typename Node, typename Weight>
 class AbstractWeightedGraph {
+
 public:
     using wnode = std::pair<Node, Weight>;
 
     using nodes = std::vector<wnode>;
     using edges = std::unordered_map<Node, nodes>;
+
 protected:
     edges es;
+
 public:
     AbstractWeightedGraph() : es() {};
     AbstractWeightedGraph(edges es) : es(es) {};

@@ -3,6 +3,7 @@
 
 template<typename Node>
 class Graph : public AbstractGraph<Node> {
+
 public:
     using graph = AbstractGraph<Node>;
     using nodes = typename graph::nodes;
@@ -36,6 +37,7 @@ public:
 
 template<typename Node>
 class DiGraph : public AbstractGraph<Node> {
+
 public:
     using graph = AbstractGraph<Node>;
     using nodes = typename graph::nodes;
