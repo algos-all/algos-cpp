@@ -6,6 +6,7 @@ template<typename Node>
 class AbstractGraph {
 
 public:
+
     using nodes = std::vector<Node>;
     using edges = std::unordered_map<Node, nodes>;
 
@@ -13,7 +14,7 @@ protected:
     edges es;
 
 public:
-    AbstractGraph () : es(edges()) {};
+    AbstractGraph () : es() {}
     AbstractGraph (edges es) : es(es) {}
 
     virtual void add_edge(Node n1, Node n2) = 0;

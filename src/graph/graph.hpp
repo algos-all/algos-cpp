@@ -5,16 +5,17 @@ template<typename Node>
 class Graph : public AbstractGraph<Node> {
 
 public:
-    using graph = AbstractGraph<Node>;
-    using nodes = typename graph::nodes;
-    using edges = typename graph::edges;
 
-    Graph() : graph() {}
-    Graph(edges es) : graph(es) {}
+    using super = AbstractGraph<Node>;
+    using nodes = typename super::nodes;
+    using edges = typename super::edges;
+
+    Graph() : super() {}
+    Graph(edges es) : super(es) {}
 
     virtual void add_edge(Node n1, Node n2) override {
-        this->es.insert({n1, nodes()});
-        this->es.insert({n2, nodes()});
+        this->es.insert({n1, nodes{}});
+        this->es.insert({n2, nodes{}});
 
         this->es[n1].push_back(n2);
         this->es[n2].push_back(n1);
@@ -39,17 +40,17 @@ template<typename Node>
 class DiGraph : public AbstractGraph<Node> {
 
 public:
-    using graph = AbstractGraph<Node>;
-    using nodes = typename graph::nodes;
-    using edges = typename graph::edges;
+    using super = AbstractGraph<Node>;
+    using nodes = typename super::nodes;
+    using edges = typename super::edges;
 
 
-    DiGraph() : graph() {}
-    DiGraph(edges es) : graph(es) {}
+    DiGraph() : super() {}
+    DiGraph(edges es) : super(es) {}
 
     virtual void add_edge(Node n1, Node n2) override {
-        this->es.insert({n1, nodes()});
-        this->es.insert({n2, nodes()});
+        this->es.insert({n1, nodes{}});
+        this->es.insert({n2, nodes{}});
 
         this->es[n1].push_back(n2);
     }
