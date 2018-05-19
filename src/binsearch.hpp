@@ -42,7 +42,7 @@ RandomIt xlower_bound(RandomIt fst, RandomIt lst, const Val& val) {
     }
 
     // First element that is equal or larger than val in the
-    // original range. If no such element, than past-the-end.
+    // original range. If no such element, then past-the-end.
     return fst;
 }
 
@@ -63,6 +63,6 @@ RandomIt xupper_bound(RandomIt fst, RandomIt lst, const Val& val) {
     }
 
     // First element that is strictly larger than val in the
-    // original range. If no such element, than past-the-end.
+    // original range. If no such element, then past-the-end.
     return fst;
 }
