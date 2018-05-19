@@ -44,7 +44,7 @@ BOOST_AUTO_TEST_CASE(gcf2n) {
 }
 
 BOOST_AUTO_TEST_CASE(gcf_primes) {
-    for (int t = 2; t != 10'000; ++t) {
+    for (int t = 2; t != 10000; ++t) {
         if (t % 13 == 0) {
             BOOST_TEST(gcf(t, 13) == 13);
         } else {
@@ -66,7 +66,6 @@ BOOST_AUTO_TEST_CASE(xgcf00) {
     BOOST_TEST(result[1] == 1);
     BOOST_TEST(result[2] == 0);
 }
-
 
 BOOST_DATA_TEST_CASE(xgcf_random, bdata::make(100), i) {
     std::mt19937 engine(i);
