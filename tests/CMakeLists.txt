@@ -1,4 +1,4 @@
-find_package(Boost 1.63 REQUIRED COMPONENTS unit_test_framework)
+find_package(Boost 1.68 REQUIRED COMPONENTS unit_test_framework)
 
 add_subdirectory(sort)
 add_subdirectory(graph)
