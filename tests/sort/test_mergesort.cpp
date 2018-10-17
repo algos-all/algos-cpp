@@ -6,13 +6,15 @@
 
 
 std::vector<sort_fun_inc> inc_sorts = {
-    mergesort0<vi::iterator, std::less<>>,
-    mergesort1<vi::iterator, std::less<>>
+    mergesort0<vi::iterator, std::less<>>
+    , mergesort1<vi::iterator, std::less<>>
+    , mergesort2<vi::iterator, std::less<>>
 };
 
 std::vector<sort_fun_dec> dec_sorts = {
-    mergesort0<vi::iterator, std::greater<>>,
-    mergesort1<vi::iterator, std::greater<>>,
+    mergesort0<vi::iterator, std::greater<>>
+    , mergesort1<vi::iterator, std::greater<>>
+    , mergesort2<vi::iterator, std::greater<>>
 };
 
 using bdata::make;
