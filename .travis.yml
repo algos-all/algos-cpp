@@ -1,0 +1,28 @@
+language: python
+python: 3.6.5
+
+matrix:
+  include:
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            packages:
+              - g++-7
+      env:
+        - PROFILE=${TRAVIS_BUILD_DIR}/profiels/travis-linux-gcc-7
+        - CMAKE_ARGS="-G 'Unix Makefiles' -DCMAKE_C_COMPILER=/usr/bin/gcc-7 -DCMAKE_CXX_COMPILER=/usr/bin/g++-7"
+
+install:
+  - virtualenv algos-cpp-venv
+  - source ./algos-cpp-venv/bin/activate
+  - pip install --upgrade pip
+  - pip install cpplint conan
+  - mkdir build && cd build
+  - conan install --profile=${PROFILE} ..
+  - cmake ${CMAKE_ARGS} ..
+  - make
+
+script:
+  - ctest
