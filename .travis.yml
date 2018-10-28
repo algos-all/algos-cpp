@@ -1,27 +1,65 @@
+sudo: false
 language: python
 python: 3.6.5
 
 matrix:
   include:
+    # works on Precise and Trusty
+    # - os: linux
+    #   addons:
+    #     apt:
+    #       sources:
+    #         - ubuntu-toolchain-r-test
+    #       packages:
+    #         - g++-4.9
+    #   env:
+    #      - MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-4.9"
+
+    # # works on Precise and Trusty
+    # - os: linux
+    #   addons:
+    #     apt:
+    #       sources:
+    #         - ubuntu-toolchain-r-test
+    #       packages:
+    #         - g++-5
+    #   env:
+    #      - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
+
+    # works on Precise and Trusty
     - os: linux
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            packages:
-              - g++-7
+          packages:
+            - g++-6
       env:
-        - PROFILE=${TRAVIS_BUILD_DIR}/profiels/travis-linux-gcc-7
-        - CMAKE_ARGS="-G 'Unix Makefiles' -DCMAKE_C_COMPILER=/usr/bin/gcc-7 -DCMAKE_CXX_COMPILER=/usr/bin/g++-7"
+        - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6 && PROFILE=${TRAVIS_BUILD_DIR}/profiles/travis-linux-6"
+
+    # works on Precise and Trusty
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-7
+      env:
+        - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7 && PROFILE=${TRAVIS_BUILD_DIR}/profiles/travis-linux-7"
+
+before_install:
+    - eval "${MATRIX_EVAL}"
 
 install:
   - virtualenv algos-cpp-venv
   - source ./algos-cpp-venv/bin/activate
   - pip install --upgrade pip
   - pip install cpplint conan
+  - cpplint --recursive src
   - mkdir build && cd build
   - conan install --profile=${PROFILE} ..
-  - cmake ${CMAKE_ARGS} ..
+  - cmake -DCMAKE_C_COMPILER=${CC} -DCMAKE_CXX_COMPILER=${CXX} ..
   - make
 
 script:
