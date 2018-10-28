@@ -17,11 +17,11 @@ void quicksort0(
     auto lft = fst, rgt = lst;
 
     using uid = std::uniform_int_distribution<>;
-    auto mid = std::next(fst, uid(0, std::distance(fst, lst))(gen));
+    auto val = *std::next(fst, uid(0, std::distance(fst, lst))(gen));
 
     while (lft <= rgt) {
-        for (; key(*lft, *mid); ++lft) {}
-        for (; key(*mid, *rgt); --rgt) {}
+        for (; key(*lft, val); ++lft) {}
+        for (; key(val, *rgt); --rgt) {}
 
         if (lft <= rgt) {
             std::iter_swap(lft++, rgt--);
