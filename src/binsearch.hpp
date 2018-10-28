@@ -1,3 +1,6 @@
+#ifndef SRC_BINSEARCH_HPP_
+#define SRC_BINSEARCH_HPP_
+
 #include <iterator>
 
 template<class RandomIt, class Val>
@@ -22,7 +25,7 @@ RandomIt binsearch(RandomIt fst, RandomIt lst, const Val& val) {
         }
     }
 
-    return lst; // not found
+    return lst;  // not found
 }
 
 template<class RandomIt, class Val>
@@ -66,3 +69,5 @@ RandomIt xupper_bound(RandomIt fst, RandomIt lst, const Val& val) {
     // original range. If no such element, then past-the-end.
     return fst;
 }
+
+#endif  // SRC_BINSEARCH_HPP_

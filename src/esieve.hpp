@@ -1,3 +1,6 @@
+#ifndef SRC_ESIEVE_HPP_
+#define SRC_ESIEVE_HPP_
+
 #include <vector>
 
 template <typename T>
@@ -14,3 +17,5 @@ std::vector<T> esieve(const T &n) {
 
     return xs;
 }
+
+#endif  // SRC_ESIEVE_HPP_

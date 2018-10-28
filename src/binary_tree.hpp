@@ -1,9 +1,12 @@
+#ifndef SRC_BINARY_TREE_HPP_
+#define SRC_BINARY_TREE_HPP_
+
 #include <iostream>
 #include <utility>
 #include <memory>
 
 
-template<class Key=int, class Val=int>
+template<class Key = int, class Val = int>
 struct BinarySearchNode {
     using NodePtr = std::shared_ptr<BinarySearchNode<Key, Val>>;
 
@@ -17,7 +20,7 @@ struct BinarySearchNode {
         : key{key}, val{val}, lft{}, rgt{} {}
 };
 
-template<class Key=int, class Val=int>
+template<class Key = int, class Val = int>
 struct BinarySearchTree {
     using Node = BinarySearchNode<Key, Val>;
     using NodePtr = std::shared_ptr<Node>;
@@ -125,3 +128,5 @@ struct BinarySearchTree {
         return 1;
     }
 };
+
+#endif  // SRC_BINARY_TREE_HPP_

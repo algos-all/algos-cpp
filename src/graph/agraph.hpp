@@ -1,21 +1,23 @@
+#ifndef SRC_GRAPH_AGRAPH_HPP_
+#define SRC_GRAPH_AGRAPH_HPP_
+
 #include <vector>
+#include <utility>
 #include <unordered_map>
 
 
 template<typename Node>
 class AbstractGraph {
-
-public:
-
+ public:
     using nodes = std::vector<Node>;
     using edges = std::unordered_map<Node, nodes>;
 
-protected:
+ protected:
     edges es;
 
-public:
-    AbstractGraph () : es() {}
-    AbstractGraph (edges es) : es(es) {}
+ public:
+    AbstractGraph() : es() {}
+    explicit AbstractGraph(edges es) : es(es) {}
 
     virtual void add_edge(Node n1, Node n2) = 0;
     virtual void del_edge(Node n1, Node n2) = 0;
@@ -36,19 +38,18 @@ public:
 
 template<typename Node, typename Weight>
 class AbstractWeightedGraph {
-
-public:
+ public:
     using wnode = std::pair<Node, Weight>;
 
     using nodes = std::vector<wnode>;
     using edges = std::unordered_map<Node, nodes>;
 
-protected:
+ protected:
     edges es;
 
-public:
-    AbstractWeightedGraph() : es() {};
-    AbstractWeightedGraph(edges es) : es(es) {};
+ public:
+    AbstractWeightedGraph() : es() {}
+    explicit AbstractWeightedGraph(edges es) : es(es) {}
 
     virtual void add_edge(Node n1, Node n2, Weight w) = 0;
     virtual void del_edge(Node n1, Node n2) = 0;
@@ -65,3 +66,5 @@ public:
         return es.end();
     }
 };
+
+#endif  // SRC_GRAPH_AGRAPH_HPP_

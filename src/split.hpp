@@ -1,10 +1,13 @@
+#ifndef SRC_SPLIT_HPP_
+#define SRC_SPLIT_HPP_
+
 #include<vector>
 #include<string>
 
 using std::vector;
 using std::string;
 
-vector<string> split(const string& str, const string& sep=" ") {
+vector<string> split(const string& str, const string& sep = " ") {
     auto result = vector<string>{};
     string::size_type lft = 0, rgt = 0;
 
@@ -18,3 +21,5 @@ vector<string> split(const string& str, const string& sep=" ") {
 
     return result;
 }
+
+#endif  // SRC_SPLIT_HPP_

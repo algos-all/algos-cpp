@@ -1,12 +1,18 @@
+#ifndef SRC_SORT_MERGESORT_HPP_
+#define SRC_SORT_MERGESORT_HPP_
+
 #include <iterator>
 #include <algorithm>
+#include <vector>
 #include <functional>
 
 
 namespace detail {
-template<class RandomIt, class Key=std::less<>>
-void mergesort0(RandomIt fst, RandomIt lst, Key key=Key{}) {
-    if (fst == lst || std::next(fst) == lst) return;
+template<class RandomIt, class Key = std::less<>>
+void mergesort0(RandomIt fst, RandomIt lst, Key key = Key{}) {
+    if (fst == lst || std::next(fst) == lst) {
+        return;
+    }
 
     auto mid = std::next(fst, std::distance(fst, lst) / 2);
 
@@ -16,9 +22,11 @@ void mergesort0(RandomIt fst, RandomIt lst, Key key=Key{}) {
     std::inplace_merge(fst, mid, lst, key);
 }
 
-template<class RandomIt, class Key=std::less<>>
-void mergesort1(RandomIt fst, RandomIt lst, Key key=Key{}) {
-    if (fst == lst || std::next(fst) == lst) return;
+template<class RandomIt, class Key = std::less<>>
+void mergesort1(RandomIt fst, RandomIt lst, Key key = Key{}) {
+    if (fst == lst || std::next(fst) == lst) {
+        return;
+    }
 
     const auto dst = std::distance(fst, lst);
 
@@ -35,13 +43,13 @@ void mergesort1(RandomIt fst, RandomIt lst, Key key=Key{}) {
     std::merge(tmp.begin(), mid, mid, tmp.end(), fst, key);
 }
 
-template<typename RandomIt, typename Key=std::less<>>
-void mergesort2(RandomIt fst, RandomIt lst, Key key=Key{}) {
+template<typename RandomIt, typename Key = std::less<>>
+void mergesort2(RandomIt fst, RandomIt lst, Key key = Key{}) {
     if (fst == lst || std::next(fst) == lst) {
         // fst == lst is possible only when this function is:
         // 1) directly called by something from the outside
         // 2) that caller decided to pass an empty container
-        return; // no elements or one element to sort => already sorted
+        return;  // no elements or one element to sort => already sorted
     }
 
     auto mid = std::next(fst, std::distance(fst, lst) / 2);
@@ -77,28 +85,32 @@ void mergesort2(RandomIt fst, RandomIt lst, Key key=Key{}) {
 
     std::copy(tmp.begin(), tmp.end(), fst);
 }
-} // namespace detail
+}  // namespace detail
 
 
-template<class RandomIt, class Key=std::less<>>
-void mergesort0(RandomIt fst, RandomIt lst, Key key=Key{}) {
+template<class RandomIt, class Key = std::less<>>
+void mergesort0(RandomIt fst, RandomIt lst, Key key = Key{}) {
     if (fst == lst) return;
 
     detail::mergesort0(fst, lst, key);
 }
 
-template<class RandomIt, class Key=std::less<>>
-void mergesort1(RandomIt fst, RandomIt lst, Key key=Key{}) {
-    if (fst == lst) return;
+template<class RandomIt, class Key = std::less<>>
+void mergesort1(RandomIt fst, RandomIt lst, Key key = Key{}) {
+    if (fst == lst) {
+        return;
+    }
 
     detail::mergesort1(fst, lst, key);
 }
 
-template<typename RandomIt, typename Key=std::less<>>
-void mergesort2(RandomIt fst, RandomIt lst, Key key=Key{}) {
+template<typename RandomIt, typename Key = std::less<>>
+void mergesort2(RandomIt fst, RandomIt lst, Key key = Key{}) {
     if (fst == lst) {
         return;
     }
 
     detail::mergesort2(fst, lst, key);
 }
+
+#endif  // SRC_SORT_MERGESORT_HPP_

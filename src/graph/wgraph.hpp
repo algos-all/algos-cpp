@@ -1,3 +1,6 @@
+#ifndef SRC_GRAPH_WGRAPH_HPP_
+#define SRC_GRAPH_WGRAPH_HPP_
+
 #include<algorithm>
 
 #include "agraph.hpp"
@@ -5,17 +8,16 @@
 
 template<typename Node, typename Weight>
 class WeightedGraph : public AbstractWeightedGraph<Node, Weight> {
-
-public:
+ public:
     using graph = AbstractWeightedGraph<Node, Weight>;
 
     using nodes = typename graph::nodes;
     using edges = typename graph::edges;
 
     WeightedGraph() : graph() {}
-    WeightedGraph(edges es) : graph(es) {}
+    explicit WeightedGraph(edges es) : graph(es) {}
 
-    virtual void add_edge(Node n1, Node n2, Weight w) override {
+    void add_edge(Node n1, Node n2, Weight w) override {
         this->es.insert({n1, nodes()});
         this->es.insert({n2, nodes()});
 
@@ -23,7 +25,7 @@ public:
         this->es[n2].push_back({n1, w});
     }
 
-    virtual void del_edge(Node n1, Node n2) override {
+    void del_edge(Node n1, Node n2) override {
         auto i1 = this->es.find(n1);
         auto i2 = this->es.find(n2);
 
@@ -52,23 +54,23 @@ public:
 
 template<typename Node, typename Weight>
 class WeightedDiGraph : public AbstractWeightedGraph<Node, Weight> {
-public:
+ public:
     using graph = AbstractWeightedGraph<Node, Weight>;
 
     using nodes = typename graph::nodes;
     using edges = typename graph::edges;
 
     WeightedDiGraph() : graph() {}
-    WeightedDiGraph(edges es) : graph(es) {}
+    explicit WeightedDiGraph(edges es) : graph(es) {}
 
-    virtual void add_edge(Node n1, Node n2, Weight w) override {
+    void add_edge(Node n1, Node n2, Weight w) override {
         this->es.insert({n1, nodes()});
         this->es.insert({n2, nodes()});
 
         this->es[n1].push_back({n2, w});
     }
 
-    virtual void del_edge(Node n1, Node n2) override {
+    void del_edge(Node n1, Node n2) override {
         auto i1 = this->es.find(n1);
         auto i2 = this->es.find(n2);
 
@@ -85,3 +87,5 @@ public:
         );
     }
 };
+
+#endif  // SRC_GRAPH_WGRAPH_HPP_

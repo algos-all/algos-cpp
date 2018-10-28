@@ -1,5 +1,5 @@
-#ifndef INVERSIONS_H_
-#define INVERSIONS_H_
+#ifndef SRC_SORT_INVERSIONS_HPP_
+#define SRC_SORT_INVERSIONS_HPP_
 
 #include <algorithm>
 #include <iterator>
@@ -9,8 +9,8 @@
 namespace detail {
 // Count the number of inversions in a collection. The underlying algorithm is
 // merge sort, so the collection becomes sorted as a side effect.
-template<typename RandomIt, typename Key=std::less<>>
-uint64_t inversions(RandomIt fst, RandomIt lst, Key key=Key{}) {
+template<typename RandomIt, typename Key = std::less<>>
+uint64_t inversions(RandomIt fst, RandomIt lst, Key key = Key{}) {
     if (std::next(fst) == lst) {
         return 0;  // There is just one element, so there are zero inversions.
     }
@@ -52,10 +52,10 @@ uint64_t inversions(RandomIt fst, RandomIt lst, Key key=Key{}) {
 
     return total_inversions;
 }
-}
+}  // namespace detail
 
-template<typename RandomIt, typename Key=std::less<>>
-uint64_t inversions(RandomIt fst, RandomIt lst, Key key=Key{}) {
+template<typename RandomIt, typename Key = std::less<>>
+uint64_t inversions(RandomIt fst, RandomIt lst, Key key = Key{}) {
     if (fst == lst) {
         return 0;
     }
@@ -63,4 +63,4 @@ uint64_t inversions(RandomIt fst, RandomIt lst, Key key=Key{}) {
     return detail::inversions(fst, lst, key);
 }
 
-#endif  // INVERSIONS_H_
+#endif  // SRC_SORT_INVERSIONS_HPP_

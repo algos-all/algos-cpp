@@ -1,3 +1,6 @@
+#ifndef SRC_FMATH_HPP_
+#define SRC_FMATH_HPP_
+
 #include<array>
 
 template<typename T>
@@ -32,3 +35,5 @@ std::array<T, 3> xgcf(T a, T b) {
 
     return {a, s1, t1};
 }
+
+#endif  // SRC_FMATH_HPP_
