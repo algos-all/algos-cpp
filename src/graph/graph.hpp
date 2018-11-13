@@ -27,7 +27,9 @@ class Graph : public AbstractGraph<Node> {
         auto i2 = this->es.find(n2);
 
         const auto end = this->es.end();
-        if (i1 == end && i2 == end) {return;}
+        if (i1 == end || i2 == end) {
+            return;
+        }
 
         auto &v1 = i1->second;
         auto &v2 = i2->second;
