@@ -1,4 +1,4 @@
-#define BOOST_TEST_MODULE test_heap
+#define BOOST_TEST_MODULE test_wgraph
 #define BOOST_TEST_DYN_LINK
 
 #include "../test.hpp"

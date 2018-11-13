@@ -1,8 +1,9 @@
-#define BOOST_TEST_MODULE test_heap
+#define BOOST_TEST_MODULE test_graph
 #define BOOST_TEST_DYN_LINK
 
 #include "../test.hpp"
 #include "graph/graph.hpp"
+
 
 BOOST_AUTO_TEST_CASE(add_edges_graph_0) {
     auto g = Graph<int>();
