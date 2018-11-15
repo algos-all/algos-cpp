@@ -49,3 +49,65 @@ BOOST_AUTO_TEST_CASE(twenty_four) {
         BOOST_TEST(result[prime] == prime);
     }
 }
+
+BOOST_AUTO_TEST_CASE(compute_primes_0) {
+    auto primes = compute_primes(0);
+
+    BOOST_TEST(primes.size() == 0);
+}
+
+BOOST_AUTO_TEST_CASE(compute_primes_1) {
+    auto primes = compute_primes(1);
+
+    BOOST_TEST(primes.size() == 0);
+}
+
+BOOST_AUTO_TEST_CASE(compute_primes_2) {
+    auto primes = compute_primes(2);
+
+    BOOST_TEST(primes.size() == 1);
+    BOOST_TEST(primes[2] == 1);
+}
+
+BOOST_AUTO_TEST_CASE(compute_primes_3) {
+    auto primes = compute_primes(3);
+
+    BOOST_TEST(primes.size() == 1);
+    BOOST_TEST(primes[3] == 1);
+}
+
+BOOST_AUTO_TEST_CASE(compute_primes_4) {
+    auto primes = compute_primes(4);
+
+    BOOST_TEST(primes.size() == 1);
+    BOOST_TEST(primes[2] == 2);
+}
+
+BOOST_AUTO_TEST_CASE(compute_primes_6) {
+    auto primes = compute_primes(6);
+
+    BOOST_TEST(primes.size() == 2);
+    BOOST_TEST(primes[2] == 1);
+    BOOST_TEST(primes[3] == 1);
+}
+
+BOOST_AUTO_TEST_CASE(compute_primes_7) {
+    auto primes = compute_primes(7);
+
+    BOOST_TEST(primes.size() == 1);
+    BOOST_TEST(primes[7] == 1);
+}
+
+BOOST_AUTO_TEST_CASE(compute_primes_8) {
+    auto primes = compute_primes(8);
+
+    BOOST_TEST(primes.size() == 1);
+    BOOST_TEST(primes[2] == 3);
+}
+
+BOOST_AUTO_TEST_CASE(compute_primes_9) {
+    auto primes = compute_primes(9);
+
+    BOOST_TEST(primes.size() == 1);
+    BOOST_TEST(primes[3] == 2);
+}
