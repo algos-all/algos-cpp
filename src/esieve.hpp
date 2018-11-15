@@ -1,6 +1,7 @@
 #ifndef SRC_ESIEVE_HPP_
 #define SRC_ESIEVE_HPP_
 
+#include <map>
 #include <cmath>
 #include <vector>
 
@@ -29,7 +30,9 @@ std::map<uint32_t, uint32_t> compute_primes(uint32_t n) {
 
     uint32_t c = 0;
 
-    for (; n % 2 == 0; n /= 2, ++c);
+    for (; n % 2 == 0; n /= 2) {
+        ++c;
+    }
 
     if (c) {
         primes[2] = c;
@@ -37,7 +40,9 @@ std::map<uint32_t, uint32_t> compute_primes(uint32_t n) {
 
     for (uint32_t f = 3; f * f <= n; f += 2) {
         c = 0;
-        for (; n % f == 0; n /= f, ++c);
+        for (; n % f == 0; n /= f) {
+            ++c;
+        }
 
         if (c) {
             primes[f] = c;
